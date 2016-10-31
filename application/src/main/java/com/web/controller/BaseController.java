@@ -13,4 +13,9 @@ public class BaseController {
     public String indexPage() {
         return "index.html";
     }
+
+    @RequestMapping("/api/test")
+    public String testConnection() {
+        return "test ok";
+    }
 }

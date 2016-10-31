@@ -12,13 +12,18 @@
 
     <artifactId>application</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <spring.version>4.2.6.RELEASE</spring.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.boilerplate</groupId>
+            <artifactId>web-ui</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <!--Spring-->
         <dependency>
@@ -56,4 +61,16 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

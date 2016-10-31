@@ -19,7 +19,8 @@ var isProd = ENV === 'build';
 console.log(isTest);
 console.log(isProd);
 
-const output = path.join(__dirname, '../target');
+const output = path.join(__dirname, '/dist/static');
+console.log(output);
 
 module.exports = function makeWebpackConfig () {
   /**

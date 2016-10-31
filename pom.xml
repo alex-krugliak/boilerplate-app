@@ -10,9 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>application</module>
-        <module>application-war</module>
         <module>web-ui</module>
+        <module>application</module>
     </modules>
 
     <build>
