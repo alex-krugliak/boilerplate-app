@@ -155,7 +155,7 @@ module.exports = function makeWebpackConfig () {
     // Render index.html
     config.plugins.push(
         new HtmlWebpackPlugin({
-          template: './src/public/index.html',
+          template: './src/index.html',
           inject: 'body'
         }),
 
