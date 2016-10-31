@@ -63,18 +63,8 @@ module.exports = function makeWebpackConfig () {
     chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
   };
 
-  /**
-   * Devtool
-   * Reference: http://webpack.github.io/docs/configuration.html#devtool
-   * Type of sourcemap to use per build type
-   */
-  if (isTest) {
-    config.devtool = 'inline-source-map';
-  } else if (isProd) {
-    config.devtool = 'source-map';
-  } else {
-    config.devtool = 'eval-source-map';
-  }
+  
+  config.devtool = !isTest || !isProd ? 'eval-source-map' : false;
 
   /**
    * Loaders
