@@ -11,7 +11,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>aplication-war</artifactId>
+    <artifactId>application-war</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
 

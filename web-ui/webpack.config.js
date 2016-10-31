@@ -8,23 +8,18 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-
-
 /**
  * Env
  * Get npm lifecycle event to identify the environment
  */
 var ENV = process.env.npm_lifecycle_event;
-console.log(ENV);
 var isTest = ENV === 'test' || ENV === 'test-watch';
 var isProd = ENV === 'build';
 
-const DEBUG = process.env.NODE_ENV !== 'production';
-
+console.log(isTest);
+console.log(isProd);
 
 const output = path.join(__dirname, '../target');
-console.log(output);
-console.log(process.env.NODE_ENV);
 
 module.exports = function makeWebpackConfig () {
   /**
@@ -44,9 +39,6 @@ module.exports = function makeWebpackConfig () {
     app: './src/app/app.js'
   };
 
-  config.resolveLoader = {
-    modulesDirectories: ["node_modules"]
-  };
   /**
    * Output
    * Reference: http://webpack.github.io/docs/configuration.html#output
@@ -55,11 +47,11 @@ module.exports = function makeWebpackConfig () {
    */
   config.output = isTest ? {} : {
     // Absolute output directory
-    path: __dirname + '/target/static',
+    path: __dirname + '/dist/static',
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
-    publicPath: isProd ? '/' : 'http://localhost:8081/',
+    publicPath: isProd ? '/' : 'http://localhost:9090/',
 
     // Filename for entry points
     // Only adds hash in build mode
@@ -70,7 +62,19 @@ module.exports = function makeWebpackConfig () {
     chunkFilename: isProd ? '[name].[hash].js' : '[name].bundle.js'
   };
 
-  
+  /**
+   * Devtool
+   * Reference: http://webpack.github.io/docs/configuration.html#devtool
+   * Type of sourcemap to use per build type
+   */
+  if (isTest) {
+    config.devtool = 'inline-source-map';
+  } else if (isProd) {
+    config.devtool = 'source-map';
+  } else {
+    config.devtool = 'eval-source-map';
+  }
+
   /**
    * Loaders
    * Reference: http://webpack.github.io/docs/configuration.html#module-loaders
@@ -159,38 +163,38 @@ module.exports = function makeWebpackConfig () {
     // Reference: https://github.com/ampedandwired/html-webpack-plugin
     // Render index.html
     config.plugins.push(
-      new HtmlWebpackPlugin({
-        template: './src/public/index.html',
-        inject: 'body'
-      }),
+        new HtmlWebpackPlugin({
+          template: './src/public/index.html',
+          inject: 'body'
+        }),
 
-      // Reference: https://github.com/webpack/extract-text-webpack-plugin
-      // Extract css files
-      // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin('[name].[hash].css', {disable: !isProd})
+        // Reference: https://github.com/webpack/extract-text-webpack-plugin
+        // Extract css files
+        // Disabled when in test mode or not in build mode
+        new ExtractTextPlugin('[name].[hash].css', {disable: !isProd})
     )
   }
 
   // Add build specific plugins
   if (isProd) {
     config.plugins.push(
-      // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
-      // Only emit files when there are no errors
-      new webpack.NoErrorsPlugin(),
+        // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
+        // Only emit files when there are no errors
+        new webpack.NoErrorsPlugin(),
 
-      // Reference: http://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
-      // Dedupe modules in the output
-      new webpack.optimize.DedupePlugin(),
+        // Reference: http://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
+        // Dedupe modules in the output
+        new webpack.optimize.DedupePlugin(),
 
-      // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-      // Minify all javascript, switch loaders to minimizing mode
-      new webpack.optimize.UglifyJsPlugin(),
+        // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+        // Minify all javascript, switch loaders to minimizing mode
+        new webpack.optimize.UglifyJsPlugin(),
 
-      // Copy assets from the public folder
-      // Reference: https://github.com/kevlened/copy-webpack-plugin
-      new CopyWebpackPlugin([{
-        from: __dirname + '/src/public'
-      }])
+        // Copy assets from the public folder
+        // Reference: https://github.com/kevlened/copy-webpack-plugin
+        new CopyWebpackPlugin([{
+          from: __dirname + '/src/public'
+        }])
     )
   }
 
@@ -199,25 +203,18 @@ module.exports = function makeWebpackConfig () {
    * Reference: http://webpack.github.io/docs/configuration.html#devserver
    * Reference: http://webpack.github.io/docs/webpack-dev-server.html
    */
-
-  config.devtool = DEBUG ? 'cheap-module-eval-source-map' : false;
-
   config.devServer = {
     contentBase: './src/public',
-    stats: 'minimal'
+    host: 'localhost',
+    port: '9090',
+    proxy: {
+      '/api/*': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        ws: true
+      }
+    }
   };
-
-  // config.devServer = {
-  //     contentBase: './target/static',
-  //     proxy: {
-  //           '/*': {
-  //               target: 'http://127.0.0.1:9090',
-  //               changeOrigin: true,
-  //               secure: false
-  //           }
-  //
-  //     }
-  // };
 
   return config;
 }();

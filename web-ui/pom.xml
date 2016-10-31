@@ -16,7 +16,7 @@
                 <version>2.3.2</version>
 
                 <configuration>
-                    <classesDirectory>target</classesDirectory>
+                    <classesDirectory>dist</classesDirectory>
                     <includes>
                         <include>static/**</include>
                     </includes>
