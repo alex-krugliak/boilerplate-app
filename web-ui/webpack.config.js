@@ -162,7 +162,13 @@ module.exports = function makeWebpackConfig () {
         // Reference: https://github.com/webpack/extract-text-webpack-plugin
         // Extract css files
         // Disabled when in test mode or not in build mode
-        new ExtractTextPlugin('[name].[hash].css', {disable: !isProd})
+        new ExtractTextPlugin('[name].[hash].css', {disable: !isProd}),
+
+        // Copy assets from the public folder
+        // Reference: https://github.com/kevlened/copy-webpack-plugin
+        new CopyWebpackPlugin([{
+          from: __dirname + '/src/public'
+        }])
     )
   }
 
@@ -179,13 +185,9 @@ module.exports = function makeWebpackConfig () {
 
         // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
         // Minify all javascript, switch loaders to minimizing mode
-        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.optimize.UglifyJsPlugin()
 
-        // Copy assets from the public folder
-        // Reference: https://github.com/kevlened/copy-webpack-plugin
-        new CopyWebpackPlugin([{
-          from: __dirname + '/src/public'
-        }])
+       
     )
   }
 
@@ -195,7 +197,7 @@ module.exports = function makeWebpackConfig () {
    * Reference: http://webpack.github.io/docs/webpack-dev-server.html
    */
   config.devServer = {
-    contentBase: './src/public',
+    contentBase: './dist/static',
     host: 'localhost',
     port: '9090',
     proxy: {
