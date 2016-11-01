@@ -3,7 +3,7 @@
 class DashboardCtrl {
     constructor($rootScope) {
         this.$rootScope = $rootScope;
-        // this.url = url;
+        
     }
 
     $onDestroy() {
@@ -21,7 +21,7 @@ const AppDashboard = {
     controller: DashboardCtrl,
     template: require('./dashboard.html'),
     bindings: {
-        urlData: '<'
+        resolvedData: '<'
     }
 };
 

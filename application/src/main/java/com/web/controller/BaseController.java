@@ -1,21 +1,30 @@
 package com.web.controller;
 
+import com.web.wrapper.ResponseError;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.Arrays;
 
 /**
- * Created on 27.10.16.
+ * Created on 01.11.16.
  */
 @Controller
 public class BaseController {
 
-    @RequestMapping({"/", "/home"})
-    public String indexPage() {
-        return "index.html";
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ResponseError handleException(Exception ex) {
+        ResponseError error = new ResponseError();
+        error.setMessage("some error");
+        error.setStackTrace(Arrays.toString(ex.getStackTrace()));
+        return error;
     }
 
-    @RequestMapping("/api/test")
-    public String testConnection() {
-        return "test ok";
-    }
+
 }

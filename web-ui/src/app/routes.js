@@ -1,16 +1,19 @@
 const RouterConfig = ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) => {
 
-    //$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
     $urlRouterProvider.otherwise('/404');
 
     $stateProvider
         .state('home', {
-            url: '/home',
-            template: '<app-dashboard url-data="$resolve.urlData"></app-dashboard>',
+            url: '/',
+            template: '<app-dashboard resolved-data="$resolve.resolvedData"></app-dashboard>',
             title: 'Home',
             resolve: {
-                urlData: function ($stateParams) {
-                    return 'http://127.0.0.1:8080/api/test';
+                resolvedData: function (HttpDataProvider) {
+                    return HttpDataProvider.get('/api/test', null, null, false);
                 }
             }
         });
