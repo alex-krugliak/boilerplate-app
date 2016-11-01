@@ -1,6 +1,7 @@
 package com.web.controller;
 
-import com.web.wrapper.ResponseError;
+
+import com.web.wrapper.response.ResponseError;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
