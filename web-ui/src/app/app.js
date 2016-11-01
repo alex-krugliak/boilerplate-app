@@ -1,25 +1,22 @@
+import 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+
+import RunConfig from './run'
+import RouterConfig from './routes'
+
+import AppDashboard from './dashboard/dashboard.component'
 
 import '../css/main.css';
 
-let app = () => {
-  return {
-    template: require('./app.html'),
-    controller: 'AppCtrl',
-    controllerAs: 'app'
-  }
-};
-
-class AppCtrl {
-  constructor() {
-    this.url = 'https://github.com/preboot/angular-webpack';
-  }
-}
-
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [])
-  .directive('app', app)
-  .controller('AppCtrl', AppCtrl);
+angular.module(MODULE_NAME, [uiRouter])
+    .run(RunConfig)
+    .config(RouterConfig)
+    .component('appDashboard', AppDashboard);
+
+angular.bootstrap(document, [MODULE_NAME]);
 
 export default MODULE_NAME;
