@@ -1,7 +1,11 @@
-import 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/main.css';
+
+import 'jquery';
+
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+import uiBootstrap from 'angular-ui-bootstrap';
 
 import RunConfig from './run'
 import RouterConfig from './routes'
@@ -10,11 +14,11 @@ import AppDashboard from './dashboard/dashboard.component'
 
 import HttpDataProvider from './common/httpDataProvider.service'
 
-import '../css/main.css';
+
 
 const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, [uiRouter])
+angular.module(MODULE_NAME, [uiRouter, uiBootstrap])
     .run(RunConfig)
     .config(RouterConfig)
     .service('HttpDataProvider', HttpDataProvider)
