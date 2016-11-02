@@ -3,6 +3,7 @@
 class DashboardCtrl {
     constructor($rootScope) {
         this.$rootScope = $rootScope;
+        this.testText = 'dashboard component';
         
     }
 

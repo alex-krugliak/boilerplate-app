@@ -65,7 +65,7 @@ module.exports = function makeWebpackConfig() {
     };
 
 
-    config.devtool = !isTest || !isProd ? 'cheap-module-eval-source-map' : null;
+    config.devtool = !isTest || !isProd ? 'sourcemap' : null;
 
     /**
      * Loaders

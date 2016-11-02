@@ -15,7 +15,7 @@ class HttpDataProvider {
                 method: "GET",
                 params: params,
                 headers: headers
-            }).then(function (response) {
+            }).then((response)=> {
                 
                 if (isRawDataReturn) {
                     resolve(response);
@@ -23,11 +23,15 @@ class HttpDataProvider {
 
                 resolve(response.data);
 
-            }, function (reason) {
+            }, (reason)=> {
                 resolve(null);
             })
         });
 
+    }
+    
+    testSomeText(){
+        return 'some text';
     }
 
 
