@@ -16,8 +16,6 @@ const ENV = process.env.npm_lifecycle_event;
 const isTest = ENV === 'test' || ENV === 'test-watch';
 const isProd = ENV === 'build';
 
-console.log(isTest);
-console.log(isProd);
 
 const output = path.join(__dirname, '/dist/static');
 console.log(output);
@@ -40,7 +38,21 @@ module.exports = function makeWebpackConfig() {
         app: './src/app/app.js'
     };
 
-    config.debug = true;
+   if (!isProd) {
+        
+        config.debug = true;
+        
+   }
+
+
+    config.resolve = {
+        root: __dirname,
+        extensions: ['', '.js']
+    };
+
+    config.resolveLoader = {
+        modulesDirectories: ["node_modules"]
+    };
     /**
      * Output
      * Reference: http://webpack.github.io/docs/configuration.html#output
@@ -65,7 +77,7 @@ module.exports = function makeWebpackConfig() {
     };
 
 
-    config.devtool = !isTest || !isProd ? 'sourcemap' : null;
+    config.devtool = !isTest && !isProd ? 'sourcemap' : null;
 
     /**
      * Loaders
