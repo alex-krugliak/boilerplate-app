@@ -12,19 +12,19 @@ const RouterConfig = ($stateProvider, $urlRouterProvider, $locationProvider, $ht
             template: '<app-dashboard resolved-data="$resolve.resolvedData"></app-dashboard>',
             title: 'Home',
             resolve: {
-                resolvedData: function (HttpDataProvider) {
+                resolvedData: ['HttpDataProvider', (HttpDataProvider) => {
                     return HttpDataProvider.get('/api/test', null, null, false);
-                }
+                }]
             }
         });
 
 
-    let interceptor = ['$rootScope', '$q', '$injector', function ($rootScope, $q, $injector) {
+    let interceptor = ['$rootScope', '$q', '$injector', ($rootScope, $q, $injector)=> {
         return {
-            response: function (response) {
+            response: (response)=> {
                 return response;
             },
-            responseError: function (rejection) {
+            responseError: (rejection)=> {
                 var status = rejection.status;
                 if (status === 401) {
                     console.log('error 401');
@@ -37,5 +37,7 @@ const RouterConfig = ($stateProvider, $urlRouterProvider, $locationProvider, $ht
 
     $httpProvider.interceptors.push(interceptor);
 };
+
+RouterConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider'];
 
 export default RouterConfig;

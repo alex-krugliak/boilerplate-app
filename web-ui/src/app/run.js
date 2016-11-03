@@ -18,4 +18,6 @@ const RunConfig = ($rootScope, $location) => {
 
 };
 
+RunConfig.$inject = ['$rootScope', '$location'];
+
 export default RunConfig;

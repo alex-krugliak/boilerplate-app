@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/main.css';
 
 import 'jquery';
@@ -13,7 +12,6 @@ import RouterConfig from './routes'
 import AppDashboard from './dashboard/dashboard.component'
 
 import HttpDataProvider from './common/httpDataProvider.service'
-
 
 
 const MODULE_NAME = 'app';

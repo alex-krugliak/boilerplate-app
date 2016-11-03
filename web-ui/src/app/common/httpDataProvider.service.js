@@ -37,4 +37,6 @@ class HttpDataProvider {
 
 }
 
+HttpDataProvider.$inject = ['$http', '$q'];
+
 export default HttpDataProvider;

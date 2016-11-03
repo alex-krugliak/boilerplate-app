@@ -17,6 +17,7 @@ class DashboardCtrl {
 
 }
 
+//DashboardCtrl.$inject = ['$rootScope'];
 
 const AppDashboard = {
     controller: DashboardCtrl,
