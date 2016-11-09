@@ -47,7 +47,7 @@ module.exports = function makeWebpackConfig() {
 
     config.resolve = {
         root: __dirname,
-        extensions: ['', '.js']
+        extensions: ['', '.js', '.less']
     };
 
     config.resolveLoader = {
@@ -98,19 +98,16 @@ module.exports = function makeWebpackConfig() {
             loader: 'babel',
             exclude: /node_modules/
         }, {
-            // CSS LOADER
-            // Reference: https://github.com/webpack/css-loader
-            // Allow loading css through js
-            //
-            // Reference: https://github.com/postcss/postcss-loader
-            // Postprocess your css with PostCSS plugins
+            test: /\.(less)$/,
+            loader: isTest ? 'null' : ExtractTextPlugin.extract("style-loader", `css-loader${isProd ? '?minimize' : ''}!postcss-loader!less-loader`)
+        },{
             test: /\.css$/,
             // Reference: https://github.com/webpack/extract-text-webpack-plugin
             // Extract css files in production builds
             //
             // Reference: https://github.com/webpack/style-loader
-            // Use style-loader in development.
-            loader: isTest ? 'null' : ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!postcss-loader')
+            // Use style-loader in development. !postcss-loader
+            loader: isTest ? 'null' : ExtractTextPlugin.extract('style-loader', `css-loader${isProd ? '?minimize' : ''}!postcss-loader`)
         }, {
             // ASSET LOADER
             // Reference: https://github.com/webpack/file-loader
