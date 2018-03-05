@@ -2,6 +2,7 @@
 
 class DashboardCtrl {
     constructor($rootScope) {
+        debugger;
         this.$rootScope = $rootScope;
         this.testText = 'dashboard component';
         
@@ -12,6 +13,8 @@ class DashboardCtrl {
     }
 
     $onInit() {
+        debugger;
+        console.log(this.resolvedData);
         console.log("component init");
     }
 

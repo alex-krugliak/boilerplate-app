@@ -1,6 +1,5 @@
-import '../styles/main.less';
+require('../styles/main.less');
 
-import 'jquery';
 
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
