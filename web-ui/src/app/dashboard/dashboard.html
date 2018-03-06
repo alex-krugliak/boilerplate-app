@@ -4,7 +4,28 @@
     <!-- Images (and assets) are parsed and loaded from within the public directory -->
     <!--<img src="/img/logo.png">-->
 
-    <span class="server-status" ng-bind="$ctrl.resolvedData.status"></span>
 
-    <!--<button class="btn btn-info">Test</button>-->
+    <div class="login-form">
+        <span class="server-status" ng-bind="$ctrl.resolvedData.status"></span>
+        <form name="$ctrl.testForm" novalidate>
+            <input name="login" ng-model="$ctrl.userLogin" required/>
+            <div class="error-messages" ng-messages="$ctrl.testForm.login.$error"
+                 ng-if="$ctrl.testForm.login.$dirty" role="alert">
+                <div ng-message="required">You did not enter your login</div>
+            </div>
+            <input name="password" ng-model="$ctrl.userPassword" required ng-minlength="8" password-validator/>
+            <div class="error-messages" ng-messages="$ctrl.testForm.password.$error"
+                 ng-if="$ctrl.testForm.password.$dirty" role="alert">
+                <div ng-message="required">You did not enter your password</div>
+                <div ng-message="minlength">Min length is 8 char</div>
+                <div ng-message="customValidation">Custom validation error</div>
+            </div>
+
+            <div>
+                <button class="btn btn-info" ng-click="$ctrl.save()">Login</button>
+            </div>
+        </form>
+    </div>
+
+
 </div>

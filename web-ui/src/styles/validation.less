@@ -1,0 +1,31 @@
+.error-messages {
+
+  &.ng-active {
+    background: red;
+    color: white;
+    padding: 7px 7px 7px 15px;
+    border-radius: 3px;
+    margin-top: 10px;
+    position: relative;
+    font-size: 11px;
+    line-height: 14px;
+
+    &:after {
+      bottom: 100%;
+      left: 10%;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border: 6px solid rgba(244, 61, 89, 0);
+      border-bottom-color: red;
+      margin-left: -6px;
+    }
+  }
+
+}
+
+.ng-invalid.ng-dirty, .ng-submitted .ng-invalid, .ng-submitted {
+  border-color: red;
+}

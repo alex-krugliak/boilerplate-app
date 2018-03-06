@@ -18,6 +18,11 @@ class DashboardCtrl {
         console.log("component init");
     }
 
+    save() {
+       
+        debugger;
+    }
+
 }
 
 DashboardCtrl.$inject = ['$rootScope'];
